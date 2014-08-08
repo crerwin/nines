@@ -5,6 +5,7 @@
  */
 
 package nines;
+import Objects.*;
 
 /**
  *
@@ -13,6 +14,8 @@ package nines;
 public class CommandLineInterface {
     public static void main(String[] args) {
         System.out.println("Nines");
-    }
-    
+        Deck deck = new Deck(); 
+        int size = deck.size();
+        System.out.println(size);
+    }    
 }

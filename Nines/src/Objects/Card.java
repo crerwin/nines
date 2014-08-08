@@ -11,27 +11,43 @@ package Objects;
  * @author cerwin
  */
 public class Card {
-    private enum suit{hearts, diamonds, clubs, spades};
-    private int actualValue;
-    private int faceValue;
+    private enum Suits{hearts, diamonds, clubs, spades, joker};
+    private Suits suit;
+    private static int faceValue;
 
-    /**
-     * @return the actualValue
-     */
+    public Card(Suits aSuit, int value) {
+        suit = aSuit;
+        faceValue = value;
+    }
+    
+    public Card(int aSuit, int value){
+        switch(aSuit){
+            case 0: suit = Suits.hearts;
+            case 1: suit = Suits.diamonds;
+            case 2: suit = Suits.clubs;
+            case 3: suit = Suits.spades; 
+            case 4: suit = Suits.joker;
+        }
+        faceValue = value;
+    }
+    
     public int getActualValue() {
-        return actualValue;
+        int returnValue = 0;
+        if (faceValue <= 10) {
+            returnValue = faceValue;
+        }
+        else {
+            switch (faceValue) {
+                case 1:     returnValue = -1;
+                case 11:    returnValue = 10;
+                case 12:    returnValue = 10;
+                case 13:    returnValue = 0;
+                case 14:    returnValue = -2;
+            }
+        }
+        return returnValue;
     }
 
-    /**
-     * @param actualValue the actualValue to set
-     */
-    public void setActualValue(int actualValue) {
-        this.actualValue = actualValue;
-    }
-
-    /**
-     * @return the faceValue
-     */
     public int getFaceValue() {
         return faceValue;
     }
@@ -43,22 +59,26 @@ public class Card {
         }
         else {
             switch (faceValue) {
+                case 1:     faceValueString = "Ace";
                 case 11:    faceValueString = "Jack";
                 case 12:    faceValueString = "Queen";
                 case 13:    faceValueString = "King";
-                case 14:    faceValueString = "Ace";
-                case 15:    faceValueString = "Joker";
+                case 14:    faceValueString = "Joker";
                 defaut:     throw new RuntimeException("invalid face value");
             }
         }
         return faceValueString;
     }
-
-    /**
-     * @param faceValue the faceValue to set
-     */
-    public void setFaceValue(int faceValue) {
-        this.faceValue = faceValue;
+    
+    public String getSuit() throws RuntimeException {
+        switch (suit) {
+            case hearts:    return "Hearts";
+            case clubs:     return "Clubs";
+            case diamonds:  return "Diamonds";
+            case spades:    return "Spades";
+            case joker:     return "Joker";
+            default:        throw new RuntimeException("invalid suit encountered");
+        }
     }
     
     
